@@ -2,10 +2,8 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import apiReducer from '../features/apiSlice';
 
-const store = configureStore({
+export default configureStore({
     reducer: {
-        apiSlice: apiReducer
+        redditApi: apiReducer
     }
 })
-
-export default store;

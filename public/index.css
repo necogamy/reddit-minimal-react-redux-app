@@ -13,5 +13,13 @@ header section:nth-child(1) {
 
 #root > section {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+}
+
+#root > section section:nth-child(1) {
+    flex: 1 80vw;
+}
+
+#root > section section:nth-child(2) {
+    flex: 2 20vw;
 }

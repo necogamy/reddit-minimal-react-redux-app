@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-
-const popularRedditApi = 'https://www.reddit.com/r/popular.json';
+import { timeDifference } from '../utils/timeConverter';
 
 export const fetchSubreddits = createAsyncThunk(
     'subreddits/fetchSubreddits',
@@ -15,7 +14,7 @@ export const fetchSubreddits = createAsyncThunk(
                 const subRedditsArray = json.data.children;
                 let structuredResponse = [];
     
-                for (let i = 0; i < subRedditsArray; i++) {
+                for (let i = 0; i < subRedditsArray.length; i++) {
                     const subReddit = subRedditsArray[i].data;
                     let video;
 
@@ -27,17 +26,19 @@ export const fetchSubreddits = createAsyncThunk(
                         {
                             name: subReddit.subreddit,
                             likes: subReddit.ups,
-                            icon: subReddit.icon_url,
+                            icon: subReddit.all_awardings[0].icon_url,
                             comments: `https://reddit.com${subReddit.permalink}`,
                             numComments: subReddit.num_comments,
                             author: subReddit.author,
                             video,
                             title: subReddit.title,
-                            image: subReddit.url
+                            image: subReddit.url,
+                            time: timeDifference(subReddit.created)
                         }
                     )
                 }
 
+                console.log(structuredResponse)  // probe
                 return structuredResponse;
             }
 
@@ -82,7 +83,7 @@ const apiSlice = createSlice({
 
 export default apiSlice.reducer;
 
-export const selectArticles = state => state.articles;
-export const selectSubReddits = state => state.subReddits;
-export const selectIsLoading = state => state.isLoading;
-export const selectFetchError = state => state.fetchError;
+export const selectArticles = state => state.redditApi.articles;
+export const selectSubReddits = state => state.redditApi.subReddits;
+export const selectIsLoading = state => state.redditApi.isLoading;
+export const selectFetchError = state => state.redditApi.fetchError;
