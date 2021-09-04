@@ -17,16 +17,24 @@ export const fetchSubreddits = createAsyncThunk(
                 for (let i = 0; i < subRedditsArray.length; i++) {
                     const subReddit = subRedditsArray[i].data;
                     let video;
-
                     if (subReddit.is_video) {
                         video = subReddit.media.reddit_video.fallback_url;
                     }
-
+                    
+                    let icon;
+                    if (subReddit.all_awardings[0].icon_url) {
+                        icon = subReddit.all_awardings[0].icon_url;
+                    } else if (subReddit.all_awardings[1].icon_url) {
+                        icon = subReddit.all_awardings[1].icon_url;
+                    } else {
+                        icon = subReddit.all_awardings[2].icon_url;
+                    }
+                    
                     structuredResponse.push(
                         {
                             name: subReddit.subreddit,
                             likes: subReddit.ups,
-                            icon: subReddit.all_awardings[0].icon_url,
+                            icon,
                             comments: `https://reddit.com${subReddit.permalink}`,
                             numComments: subReddit.num_comments,
                             author: subReddit.author,
@@ -38,7 +46,6 @@ export const fetchSubreddits = createAsyncThunk(
                     )
                 }
 
-                console.log(structuredResponse)  // probe
                 return structuredResponse;
             }
 
@@ -77,6 +84,7 @@ const apiSlice = createSlice({
         [fetchSubreddits.rejected]: (state, action) => {
             state.isLoading = false;
             state.fetchError = true;
+            console.log(action.error.stack)
         }
     }
 });

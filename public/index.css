@@ -1,10 +1,28 @@
+html * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
 img {
-    width: 5%;
+    width: 20%;
+}
+
+:root {
+    --background-color: rgb(251, 251, 251);
+    --light-background-color: rgb(240, 240, 240);
+}
+
+#root {
+    background-color: var(--background-color);
 }
 
 header {
     display: flex;
     align-items: center;
+    background-color: #fff;
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1),0 4px 6px -2px rgba(0,0,0,0.05);
+    margin-bottom: 17px;
 }
 
 header section:nth-child(1) {
@@ -13,13 +31,47 @@ header section:nth-child(1) {
 
 #root > section {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    gap: 17px;
 }
 
 #root > section section:nth-child(1) {
-    flex: 1 80vw;
+    flex: 1 77vw;
 }
 
 #root > section section:nth-child(2) {
-    flex: 2 20vw;
+    flex: 2 23vw;
+}
+
+.app-color {
+    color: rgb(100, 100, 100);
+}
+
+.comments {
+    padding: 5px;
+}
+.comments:hover {
+    background-color: var(--light-background-color);
+}
+
+img[alt='like_up']:hover {
+    background-color: var(--light-background-color);
+}
+img[alt='like_down']:hover {
+    background-color: var(--light-background-color);
+}
+
+.article:hover {
+    box-shadow: 0 20px 15px -3px rgba(0,0,0,0.1), 0 10px 6px -2px rgba(0,0,0,0.05);
+}
+
+.subreddit:hover {
+    background-color: var(--light-background-color);
+    cursor: pointer;
+}
+
+@media screen and (max-width: 500px) {
+    #root > section {
+        flex-direction: column;
+    }
 }
