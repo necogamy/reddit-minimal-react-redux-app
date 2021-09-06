@@ -1,5 +1,5 @@
 # **Reddit Minimal React Redux App**
-## This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## This project was bootstrapped with Create React App
 ### [You can see this project here](https://reddit-minimal-react-redux.netlify.app/)
 
 ## **Overview**
