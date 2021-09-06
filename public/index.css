@@ -44,11 +44,12 @@ header section:nth-child(1) {
 }
 
 .app-color {
-    color: rgb(100, 100, 100);
+    color: #646464;
 }
 
 .comments {
     padding: 5px;
+    border-radius: 8px;
 }
 .comments:hover {
     background-color: var(--light-background-color);
@@ -61,17 +62,65 @@ img[alt='like_down']:hover {
     background-color: var(--light-background-color);
 }
 
-.article:hover {
-    box-shadow: 0 20px 15px -3px rgba(0,0,0,0.1), 0 10px 6px -2px rgba(0,0,0,0.05);
-}
-
 .subreddit:hover {
     background-color: var(--light-background-color);
     cursor: pointer;
 }
 
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+}
+
+.loading-spinner::after {
+    content: "";
+    width: 80px;
+    height: 80px;
+    border: 12px solid #1d1d1d;
+    border-top-color: rgb(184, 57, 34);
+    border-radius: 50%;
+    animation: loading 1s linear infinite;
+}
+
+#input:focus {
+    border: 1px solid #1d1d1d !important;
+}
+
+@keyframes loading {
+    to {
+        transform: rotate(1turn);
+    }
+}
+
+@keyframes transitionIn {
+    from {
+        opacity: 0;
+        transform: rotateX(-10deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: rotateX(0);
+    }
+}
+
+@keyframes jumpIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 @media screen and (max-width: 500px) {
     #root > section {
         flex-direction: column;
+    }
+    img[alt='loading-logo'] {
+        width: 30%;
     }
 }

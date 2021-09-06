@@ -1,63 +1,116 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { 
+    selectIsLoading as selectArticlesIsLoading, 
+    selectFetchError as selectArticlesFetchError,
+    selectArticles,
+    selectSearchedArticles,
+    selectIsFiltered,
+    fetchArticles
+} from '../../features/fetchArticles/fetchArticlesSlice';
+import {
+    selectIsLoading as selectSubredditsIsLoading,
     selectSubReddits,
-    selectIsLoading, 
-    selectFetchError,
-    selectArticles
-} from '../../features/apiSlice';
-import { fetchSubreddits } from '../../features/apiSlice';
+    selectFetchError as selectSubredditsFetchError,
+    fetchSubreddits
+} from '../../features/fetchSubreddits/fetchSubredditsSlice';
 import { Article } from '../article/Article';
 import { v4 as uuidv4 } from 'uuid';
+import { LoadingPage } from '../loadingPage/LoadingPage';
+import redditLogo from '../../assets/reddit_logo.svg';
+import { LoadingSpinner } from '../../utils/LoadingSpinner';
+import random from '../../assets/random.svg';
+
+
+const iconStyle = {
+    border: '2px solid rgb(30, 30, 30)',
+    borderRadius: '50%',
+    width: '13%',
+}
+
+const subredditSectionStyle = {
+    boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05)',
+    padding: 20, 
+    backgroundColor: '#fff',
+    height: '100%'
+}
+
 
 export const Subreddits = () => {
-    const popularRedditApi = 'https://www.reddit.com/r/popular.json';
     const dispatch = useDispatch();
+    const [fetchLink, setFetchLink] = useState('https://www.reddit.com/r/popular.json');
+    
+    // Articles
+    const articles = useSelector(selectArticles);
+    const searchedArticles = useSelector(selectSearchedArticles);
+    const isLoadingArticles = useSelector(selectArticlesIsLoading);
+    const articlesError = useSelector(selectArticlesFetchError);
+    const isFiltered = useSelector(selectIsFiltered);
 
     useEffect(() => {
-        dispatch(fetchSubreddits(popularRedditApi));
-    }, [dispatch])
-    
-    const subReddits = useSelector(selectSubReddits);
-    const articles = useSelector(selectArticles);
-    const isLoading = useSelector(selectIsLoading);
-    const errorWhileFetching = useSelector(selectFetchError);
+        dispatch(fetchArticles(fetchLink));
+    }, [dispatch, fetchLink])
 
-    const iconStyle = {
-        border: '2px solid rgb(30, 30, 30)',
-        borderRadius: '50%',
-        width: '13%',
+    // Subreddits
+    const subReddits = useSelector(selectSubReddits);
+    const isLoadingSubreddits = useSelector(selectSubredditsIsLoading);
+    const subredditsError = useSelector(selectSubredditsFetchError);
+
+    useEffect(() => {
+        dispatch(fetchSubreddits(fetchLink))
+    }, [dispatch])
+
+    const handleClick = link => {
+        setFetchLink(link)
     }
 
-    const subredditSectionStyle = {
-        boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1),0 4px 6px -2px rgba(0,0,0,0.05)',
-        padding: 20, 
-        backgroundColor: '#fff',
-        height: '100%'
+    let toSend;
+    if (isFiltered) {
+        toSend = searchedArticles;
+    } else if (!isFiltered) {
+        toSend = articles;
     }
 
     return (
         <section>
             <section style={{backgroundColor: 'rgb(251, 251, 251)', padding: '5px 0 5px 20px'}}>
                 {
-                    isLoading ? ''
+                    isLoadingArticles ? <LoadingSpinner marginTop='5vh' />
+                    
+                    : articlesError ? <p>An error ocurred while requesting Articles :(</p>
                 
-                    : errorWhileFetching ? ''
-                
-                    : articles.map(article => <Article key={uuidv4()} article={article} />)
+                    : isLoadingSubreddits ? '' 
+                    
+                    : toSend.map(article => <Article key={uuidv4()} article={article} />)
                 }
             </section>
             <section style={subredditSectionStyle}>
                 <h2 style={{marginBottom: 20, color: 'rgb(30,30,30)'}}>Subreddits</h2>
                 <ul>
+                    <li 
+                        className='subreddit' 
+                        onClick={() => handleClick('https://www.reddit.com/r/popular.json')}
+                        style={{listStyleType: 'none', padding: '20px 15px'}}
+                        key={uuidv4()}
+                    >
+                        <figure style={{display: 'flex', alignItems: 'center'}}>
+                            <img src={redditLogo} style={iconStyle} alt='home' />
+                            <figcaption style={{paddingLeft: 10, fontWeight: 'bolder'}}>Home</figcaption>
+                        </figure>
+                    </li>
                     {   
-                        isLoading ? ''
-                        : errorWhileFetching ? <li>An error ocurred while requesting Subreddits :(</li>
+                        isLoadingSubreddits ? <LoadingPage />
+                        : subredditsError ? <p>An error ocurred while requesting Subreddits :(</p>
                         : subReddits.map(sub => {
+                            let subRedditLink = `https://www.reddit.com/r/${sub.name}.json`;
+
                             return (
-                                <li className='subreddit' style={{listStyleType: 'none', padding: '20px 15px'}} key={uuidv4()}>
+                                <li onClick={() => handleClick(subRedditLink)} 
+                                    className='subreddit' style={{listStyleType: 'none', padding: '20px 15px'}} 
+                                    key={uuidv4()}
+                                >
                                     <figure style={{display: 'flex', alignItems: 'center'}}>
-                                        <img src={sub.icon} style={iconStyle} alt={sub.name} />
+                                        <img src={sub.icon || redditLogo} style={iconStyle} alt='' />
                                         <figcaption style={{paddingLeft: 10, fontWeight: 'bolder'}}>{sub.name}</figcaption>
                                     </figure>
                                 </li>

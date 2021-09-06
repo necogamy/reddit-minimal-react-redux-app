@@ -20,5 +20,18 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.2/particles.min.js"></script>
+    <script>
+      window.onload = function() {
+        const particles = Particles.init({
+          selector: '.canvas-selector',
+          connectParticles: true
+        });
+
+        setTimeout(()=>{
+          particles.pauseAnimation()
+        }, 10000)
+      };
+    </script>
   </body>
 </html>

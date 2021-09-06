@@ -3,16 +3,17 @@ import React from 'react';
 import logo from '../../assets/reddit_logo.svg';
 import { Search } from '../search/Search';
 
-export const Header = () => {
-    const headerStyle = {
-        padding: '15px 0'
-    }
+const headerStyle = {
+    padding: '15px 0'
+}
 
-    const logoStyle = {
-        display: 'flex',
-        alignItems: 'center',
-        paddingLeft: '10vh'
-    }
+const logoStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    paddingLeft: '10vh'
+}
+
+export const Header = () => {
 
     return (
         <header style={headerStyle}>
