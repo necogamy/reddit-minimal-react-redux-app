@@ -123,4 +123,10 @@ img[alt='like_down']:hover {
     img[alt='loading-logo'] {
         width: 30%;
     }
+    header > form {
+        display: none;
+    }
+    .articlesSection {
+        padding: 0 !important;
+    }
 }

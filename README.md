@@ -10,6 +10,13 @@
 * Obtained data from the API of Reddit
 * You can see Subreddits, posts, comments, etc
 
+## **Future Work**
+* This project is below development.
+* There is an error with the comments that only can contain one comments from an article
+* If there is not results in the search bar, display a message
+* A little changes to styles, like more dedication to phone version, media queries etc,
+* There is not testing
+
 ## **Built with**
 * React
 * Redux

@@ -59,7 +59,7 @@ export const Subreddits = () => {
 
     return (
         <section>
-            <section style={{backgroundColor: 'rgb(251, 251, 251)', padding: '5px 0 5px 20px'}}>
+            <section className='articlesSection' style={{backgroundColor: 'rgb(251, 251, 251)', padding: '5px 0 5px 20px'}}>
                 {
                     isLoadingArticles ? <LoadingSpinner marginTop='5vh' />
                     
