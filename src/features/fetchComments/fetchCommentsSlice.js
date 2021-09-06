@@ -3,10 +3,10 @@ import { timeDifference } from  '../../utils/timeConverter';
 
 export const fetchComments = createAsyncThunk(
     'comments/fetchComments',
-    async (linkAPI, thunkAPI) => {
-        
+    async (commentLink, thunkAPI) => {
+
         try {
-            const response = await fetch(linkAPI);
+            const response = await fetch(commentLink);
 
             let json;
             if (response.ok) {
@@ -39,7 +39,8 @@ const fetchCommentsSlice = createSlice({
     initialState: {
         comments: [],
         isLoading: false,
-        fetchError: false
+        fetchError: false,
+        id: ''
     },
     reducers: {},
     extraReducers: {

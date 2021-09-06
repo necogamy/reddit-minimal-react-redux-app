@@ -19,21 +19,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { LoadingPage } from '../loadingPage/LoadingPage';
 import redditLogo from '../../assets/reddit_logo.svg';
 import { LoadingSpinner } from '../../utils/LoadingSpinner';
-import random from '../../assets/random.svg';
-
-
-const iconStyle = {
-    border: '2px solid rgb(30, 30, 30)',
-    borderRadius: '50%',
-    width: '13%',
-}
-
-const subredditSectionStyle = {
-    boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05)',
-    padding: 20, 
-    backgroundColor: '#fff',
-    height: '100%'
-}
+import { iconStyle, subredditSectionStyle } from './styles';
 
 
 export const Subreddits = () => {

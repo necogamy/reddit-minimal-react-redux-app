@@ -1,26 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { searchResults } from '../../features/fetchArticles/fetchArticlesSlice';
+import { inputStyles, buttonStyles } from './styles';
 
-const inputStyles = {
-    width: '25%',
-    height: 30,
-    borderRadius: 5,
-    outline: 'none',
-    backgroundColor: 'rgb(233, 233, 233)',
-    border: '1px solid gray',
-    paddingLeft: 20
-}
-const buttonStyles = {
-    width: '10%',
-    height: 30,
-    borderRadius: 5,
-    backgroundColor: 'rgb(33, 33, 33)',
-    border: 'none',
-    cursor: 'pointer',
-    marginLeft: 5,
-    color: '#fff'
-}
 
 export const Search = () => {
     const [search, setSearch] = useState('');

@@ -2,16 +2,7 @@ import React from 'react';
 
 import logo from '../../assets/reddit_logo.svg';
 import { Search } from '../search/Search';
-
-const headerStyle = {
-    padding: '15px 0'
-}
-
-const logoStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    paddingLeft: '10vh'
-}
+import { headerStyle, logoStyle } from './styles.js';
 
 export const Header = () => {
 
